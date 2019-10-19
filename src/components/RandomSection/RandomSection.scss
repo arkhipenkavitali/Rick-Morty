@@ -1,5 +1,45 @@
 .random {
     background-color: #FAF76C;
     text-align: center;
-    padding: 20px;
+    padding: 0 20px 20px;
+    display: flex;
+
+    &__image {
+        p {
+            font-family: cursive;
+            font-size: 20px;
+        }
+
+        img {
+            width: 150px;
+            height: 150px;
+            border-radius: 6px;
+        }
+    }
+
+    &__info {
+        text-align: left;
+        width: 100%;
+        padding: 0 20px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    &__item {
+        padding: 10px;
+        display: flex;
+        align-items: baseline;
+        font-size: 20px;
+
+        & :first-child {
+            margin-right: 10px;
+            display: block;
+            font-weight: bold;
+            font-size: 24px;
+            font-style: italic;
+
+        }
+    }
 }

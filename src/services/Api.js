@@ -14,11 +14,23 @@ export default class Api {
     
     async getAllCharacters(){
         const result = await this.getResponse(`/character`);
-        return result.results;
+        return result.results.map(this._transformCharacter);
     }
     
-    getCharacter(id){
-        return this.getResponse(`/character/${id}`);
+    async getCharacter(id){
+        const character = await this.getResponse(`/character/${id}`);
+        return this._transformCharacter(character);
+    }
+
+    _transformCharacter(character){
+        return {
+            image: character.image,
+            name: character.name,
+            gender: character.gender,
+            species: character.species,
+            status: character.status,
+            created: character.created,
+        }
     }
     
     async getAllLocations(){
