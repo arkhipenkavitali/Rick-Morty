@@ -1,0 +1,21 @@
+.spinner {
+    width: 100px;
+    height: 100px;
+    border: 2px solid transparent;
+    border-top-color: rebeccapurple;
+    border-bottom-color: rebeccapurple;
+    box-sizing: border-box;
+    border-radius: 50%;
+    animation: circle 3s linear infinite;
+    text-align: center;
+    position: relative;
+    left: 50%;
+    margin-left: -50px;
+    margin-top: 10px;
+}
+
+@keyframes circle {
+    to {
+        transform: rotate(360deg);
+    }
+}
