@@ -17,6 +17,11 @@ export default class Api {
         return result.results.map(this._transformCharacter);
     }
     
+    async getCharactersLength(){
+        const result = await this.getResponse(`/character`);
+        return result.info.count;
+    }
+    
     async getCharacter(id){
         const character = await this.getResponse(`/character/${id}`);
         return this._transformCharacter(character);

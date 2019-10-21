@@ -28,13 +28,16 @@ export default class RandomSection extends Component {
     };
     
     getInfo() {
-        const random = Math.floor(Math.random() * 20 + 1);
-        return this.api.getCharacter(random).then((randomItem) => {
-            this.setState({
-                randomItem,
-                loading: false
-            })
-        }).catch(this.onError);
+        this.api.getCharactersLength().then((data)=>{
+            const random = Math.floor(Math.random() * data + 1);
+    
+            return this.api.getCharacter(random).then((randomItem) => {
+                this.setState({
+                    randomItem,
+                    loading: false
+                })
+            }).catch(this.onError);
+        });
     }
     
     render() {
