@@ -3,44 +3,55 @@ import Api from '../../services/Api';
 
 import './RandomSection.css';
 import Spinner from "../Spinner/Spinner";
+import Error from "../Error/Error";
 
 export default class RandomSection extends Component {
-
-  api = new Api();
-
-  state = {
-    randomItem: {},
-    loading: true
-  };
-
-  constructor(props){
-    super(props);
-    this.getInfo();
-  }
-
-  getInfo(){
-    const random = Math.floor(Math.random() * 20 + 1);
-    return this.api.getCharacter(random).then((randomItem)=>{
-      this.setState({
-          randomItem,
-          loading: false
-      });
-    });
-  }
-
-  render() {
-    const {randomItem, loading} = this.state;
     
-    const loader = loading ? <Spinner /> : null;
-    const content = !loading ? <RandomView item={randomItem} /> : null;
-
-    return (
-        <div className="random">
-            {loader}
-            {content}
-        </div>
-    )
-  }
+    api = new Api();
+    
+    state = {
+        randomItem: {},
+        loading: true,
+        error: false
+    };
+    
+    constructor(props) {
+        super(props);
+        this.getInfo();
+    }
+    
+    onError = () => {
+        return this.setState({
+            error: true,
+            loading: false
+        })
+    };
+    
+    getInfo() {
+        const random = Math.floor(Math.random() * 20 + 1);
+        return this.api.getCharacter(random).then((randomItem) => {
+            this.setState({
+                randomItem,
+                loading: false
+            })
+        }).catch(this.onError);
+    }
+    
+    render() {
+        const {randomItem, loading, error} = this.state;
+        
+        const hasData = !(loading || error);
+        
+        const errorMessage = error ? <Error /> : null;
+        const loader = loading ? <Spinner /> : null;
+        const content = hasData ? <RandomView item={randomItem} /> : null;
+        
+        return (
+            <div className="random">
+                {errorMessage} {loader} {content}
+            </div>
+        )
+    }
 };
 
 const RandomView = ({item}) => {
@@ -51,7 +62,7 @@ const RandomView = ({item}) => {
         <React.Fragment>
             <div className="random__image">
                 <p>{name}</p>
-                <img src={image} alt={name}/>
+                <img src={image} alt={name} />
             </div>
             <div className="random__info">
                 <p className="random__item">
@@ -73,7 +84,7 @@ const RandomView = ({item}) => {
             </div>
             <div className="random__image">
                 <p>{name}</p>
-                <img src={image} alt={name}/>
+                <img src={image} alt={name} />
             </div>
         </React.Fragment>
     )
