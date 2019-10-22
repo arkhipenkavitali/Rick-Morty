@@ -43,8 +43,8 @@ export default class Api {
         return result.results.map(this._transformLocation);
     }
     
-    getLocation(id){
-        const result = this.getResponse(`/location/${id}`);
+    async getLocation(id){
+        const result = await this.getResponse(`/location/${id}`);
         return this._transformLocation(result);
     }
 
