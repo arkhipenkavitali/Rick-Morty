@@ -27,7 +27,7 @@ export default class Api {
         return this._transformCharacter(character);
     }
 
-    _transformCharacter(character){
+    _transformCharacter = (character) => {
         return {
             image: character.image,
             name: character.name,
@@ -36,17 +36,29 @@ export default class Api {
             status: character.status,
             created: character.created,
         }
-    }
+    };
     
     async getAllLocations(){
         const result = await this.getResponse(`/location`);
-        return result.results;
+        return result.results.map(this._transformLocation);
     }
     
     getLocation(id){
-        return this.getResponse(`/location/${id}`);
+        const result = this.getResponse(`/location/${id}`);
+        return this._transformLocation(result);
     }
-    
+
+    _transformLocation = (location) => {
+        return {
+            id: location.id,
+            name: location.name,
+            type: location.type,
+            dimension: location.dimension,
+            residents: location.residents,
+            created: location.created,
+        }
+    };
+
     async getAllEpizodes(){
         const result = await this.getResponse(`/episode`);
         return result.results;

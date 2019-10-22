@@ -6,18 +6,29 @@ import PersonDetails from "../PersonDetails/PersonDetails";
 
 import './App.css';
 
-
 export default class extends Component {
-    render() {
-        return (
-            <div>
-                <Header />
-                <RandomSection />
-                <div className="flex">
-                    <ItemList />
-                    <PersonDetails />
-                </div>
-            </div>
-        )
-    }
+  state = {
+    location: null
+  };
+
+  onLocation = (id) => {
+    this.setState({
+      location: id
+    })
+  };
+
+
+  render() {
+    const {location} = this.state;
+    return (
+        <div>
+          <Header/>
+          <RandomSection/>
+          <div className="flex">
+            <ItemList onLocationSelected={this.onLocation}/>
+            <PersonDetails personId={location}/>
+          </div>
+        </div>
+    )
+  }
 }

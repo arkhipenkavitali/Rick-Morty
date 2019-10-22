@@ -14,12 +14,13 @@ export default class RandomSection extends Component {
         loading: true,
         error: false
     };
-    
-    constructor(props) {
-        super(props);
+
+    componentDidMount() {
         this.getInfo();
+        setInterval(this.getInfo, 7000);
+        console.log('componentDidMount()')
     }
-    
+
     onError = () => {
         return this.setState({
             error: true,
@@ -27,7 +28,8 @@ export default class RandomSection extends Component {
         })
     };
     
-    getInfo() {
+    getInfo = () => {
+        console.log('update');
         this.api.getCharactersLength().then((data)=>{
             const random = Math.floor(Math.random() * data + 1);
     
@@ -37,10 +39,11 @@ export default class RandomSection extends Component {
                     loading: false
                 })
             }).catch(this.onError);
-        });
-    }
+        }).catch(this.onError);
+    };
     
     render() {
+        console.log('render()');
         const {randomItem, loading, error} = this.state;
         
         const hasData = !(loading || error);
@@ -58,7 +61,6 @@ export default class RandomSection extends Component {
 };
 
 const RandomView = ({item}) => {
-    
     const {image, name, gender, species, status, created} = item;
     
     return (

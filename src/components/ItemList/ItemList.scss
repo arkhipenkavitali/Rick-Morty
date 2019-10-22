@@ -3,4 +3,13 @@
     text-align: center;
     padding: 20px;
     background-color: peru;
+    margin: 0;
+    list-style-type: none;
+    &__item {
+        padding: 5px;
+        &:hover {
+            color: lightcyan;
+            cursor: pointer;
+        }
+    }
 }
